@@ -11,7 +11,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import org.json.XML;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -19,10 +21,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.squareup.picasso.Picasso;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.*;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,6 +42,7 @@ public class Second extends AppCompatActivity {
     ListView listView;
     CustomAdapter customAdapter;
     ArrayList<Weather> weather;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,10 +52,10 @@ public class Second extends AppCompatActivity {
 //        tv_err.setVisibility(View.INVISIBLE);
         final Intent intent = getIntent();
         city = intent.getStringExtra("city");
-        if (city.equals("")){
+        if (city.equals("")) {
             tv_city.setText("HaNoi");
             Get3HoursData("HaNoi");
-        }else{
+        } else {
             Get3HoursData(city);
         }
         btn_back.setOnClickListener(new View.OnClickListener() {
@@ -60,17 +65,19 @@ public class Second extends AppCompatActivity {
             }
         });
     }
-    private void AnhXa(){
-        tv_city = (TextView)findViewById(R.id.tv_name);
-        btn_back = (ImageButton)findViewById(R.id.btn_back);
-        listView = (ListView)findViewById(R.id.list_);
+
+    private void AnhXa() {
+        tv_city = (TextView) findViewById(R.id.tv_name);
+        btn_back = (ImageButton) findViewById(R.id.btn_back);
+        listView = (ListView) findViewById(R.id.list_);
         weather = new ArrayList<Weather>();
-        customAdapter = new CustomAdapter(Second.this,weather);
+        customAdapter = new CustomAdapter(Second.this, weather);
         listView.setAdapter(customAdapter);
 //        tv_err = (TextView)findViewById(R.id.tv_err);
     }
-    private void Get3HoursData(String data){
-        String url = "http://api.openweathermap.org/data/2.5/forecast?q="+data+"&units=metric&cnt=7&appid=92c6161e0d9ddd64a865f69b71a89c31";
+
+    private void Get3HoursData(String data) {
+        String url = "http://api.openweathermap.org/data/2.5/forecast?q=" + data + "&units=metric&cnt=7&appid=92c6161e0d9ddd64a865f69b71a89c31";
         RequestQueue requestQueue = Volley.newRequestQueue(Second.this);
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -83,12 +90,12 @@ public class Second extends AppCompatActivity {
                     String name = jsonObjectCity.getString("name");
                     tv_city.setText(name);
                     JSONArray jsonArray = jsonObject1.getJSONArray("list");
-                    for (int i = 0;i<jsonArray.length();i++){
+                    for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObjectList = jsonArray.getJSONObject(i);
                         String day = jsonObjectList.getString("dt");
                         long l = Long.valueOf(day);
-                        Date date = new Date(l*1000L);
-                        SimpleDateFormat  simpleDateFormat = new SimpleDateFormat("EEEE dd-MM-yyyy HH:mm");
+                        Date date = new Date(l * 1000L);
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE dd-MM-yyyy HH:mm");
                         String Day = simpleDateFormat.format(date);
 
                         JSONObject jsonObjectMain = jsonObjectList.getJSONObject("main");
@@ -100,7 +107,7 @@ public class Second extends AppCompatActivity {
                         Double b = Double.valueOf(temp_max);
 
                         String Temp_min = String.valueOf(a.intValue());
-                        String Temp_max =String.valueOf(b.intValue());
+                        String Temp_max = String.valueOf(b.intValue());
 
                         JSONArray jsonArrayWeather = jsonObjectList.getJSONArray("weather");
                         JSONObject jsonObjectWeather = jsonArrayWeather.getJSONObject(0);
@@ -108,7 +115,7 @@ public class Second extends AppCompatActivity {
                         String icon = jsonObjectWeather.getString("icon");
 
                         //Gán giá trị
-                        weather.add(new Weather(Day,description,icon,Temp_max,Temp_min));
+                        weather.add(new Weather(Day, description, icon, Temp_max, Temp_min));
                     }
                     customAdapter.notifyDataSetChanged();
                 } catch (JSONException e) {

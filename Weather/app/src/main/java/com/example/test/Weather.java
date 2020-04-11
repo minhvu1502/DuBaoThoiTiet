@@ -47,6 +47,7 @@ public class Weather {
     private String Image;
     private String max;
     private String min;
+
     public Weather(String hours, String status, String image, String max, String min) {
         Hours = hours;
         Status = status;
