@@ -21,6 +21,7 @@ public class CustomAdapter extends BaseAdapter {
     }
 
     ArrayList<Weather> arrayList;
+
     @Override
     public int getCount() {
         return arrayList.size();
@@ -39,13 +40,12 @@ public class CustomAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
-        if(view == null)
-        {
+        if (view == null) {
             LayoutInflater inflater = LayoutInflater.from(context);
-            view = inflater.inflate(R.layout.line_second,null);
+            view = inflater.inflate(R.layout.line_second, null);
         }
         Weather p = (Weather) getItem(position);
-        if (p != null){
+        if (p != null) {
             //Anh xa
             TextView txt_date = (TextView) view.findViewById(R.id.tv_hours);
             TextView txt_status = (TextView) view.findViewById(R.id.tv_line_status);
@@ -54,9 +54,9 @@ public class CustomAdapter extends BaseAdapter {
             TextView txt_min = (TextView) view.findViewById(R.id.txt_min);
             txt_date.setText(p.getHours());
             txt_status.setText(p.getStatus());
-            txt_min.setText(p.getMin()+"°C");
-            txt_max.setText(p.getMax()+"°C");
-            Picasso.get().load("http://openweathermap.org/img/wn/"+p.getImage()+".png").into(img);
+            txt_min.setText(p.getMin() + "°C");
+            txt_max.setText(p.getMax() + "°C");
+            Picasso.get().load("http://openweathermap.org/img/wn/" + p.getImage() + ".png").into(img);
         }
         return view;
     }
