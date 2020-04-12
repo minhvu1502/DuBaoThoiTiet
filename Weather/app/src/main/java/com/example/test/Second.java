@@ -36,7 +36,7 @@ import javax.xml.XMLConstants;
 
 //http://api.openweathermap.org/data/2.5/forecast?q=hanoi&units=metric&cnt=7&appid=92c6161e0d9ddd64a865f69b71a89c31
 public class Second extends AppCompatActivity {
-    String city;
+    String city_name;
     ImageButton btn_back;
     TextView tv_city, tv_err;
     ListView listView;
@@ -51,12 +51,12 @@ public class Second extends AppCompatActivity {
         AnhXa();
 //        tv_err.setVisibility(View.INVISIBLE);
         final Intent intent = getIntent();
-        city = intent.getStringExtra("city");
-        if (city.equals("")) {
+
+        if (city_name == null) {
             tv_city.setText("HaNoi");
             Get3HoursData("HaNoi");
         } else {
-            Get3HoursData(city);
+            Get3HoursData(city_name);
         }
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,7 +77,7 @@ public class Second extends AppCompatActivity {
     }
 
     private void Get3HoursData(String data) {
-        String url = "http://api.openweathermap.org/data/2.5/forecast?q=" + data + "&units=metric&cnt=7&appid=92c6161e0d9ddd64a865f69b71a89c31";
+        String url = "http://api.openweathermap.org/data/2.5/forecast?q=" + data + "&units=metric&cnt=7&appid=92c6161e0d9ddd64a865f69b71a89c31&lang=vi";
         RequestQueue requestQueue = Volley.newRequestQueue(Second.this);
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {

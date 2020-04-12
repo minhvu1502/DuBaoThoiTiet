@@ -48,7 +48,7 @@ public class CustomAdapter2 extends ArrayAdapter<Data> {
         Data p = getItem(position);
         if (p != null) {
             // Anh xa + Gan gia tri
-            TextView txt1 = (TextView) view.findViewById(R.id.textView);
+            TextView txt1 = (TextView) view.findViewById(R.id.txt_option);
             ImageView img = (ImageView) view.findViewById(R.id.imageView2);
             txt1.setText(p.getTen());
             img.setImageResource(p.getAnh());

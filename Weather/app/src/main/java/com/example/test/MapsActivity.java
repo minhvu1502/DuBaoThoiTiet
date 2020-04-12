@@ -122,12 +122,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ct, 15));
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    Toast.makeText(MapsActivity.this, "Không tìm thấy", Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(MapsActivity.this, "Không tìm thấy", Toast.LENGTH_SHORT).show();
             }
         });
         requestQueue.add(stringRequest);
