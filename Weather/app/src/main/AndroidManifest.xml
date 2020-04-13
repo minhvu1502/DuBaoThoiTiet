@@ -42,6 +42,7 @@
         <activity android:name=".seven_day_forecast" />
         <activity android:name=".Second" />
         <activity android:name=".MainActivity">
+
         </activity>
     </application>
 

@@ -51,10 +51,10 @@ public class Second extends AppCompatActivity {
         AnhXa();
 //        tv_err.setVisibility(View.INVISIBLE);
         final Intent intent = getIntent();
-
+        city_name = intent.getStringExtra("city_name");
         if (city_name == null) {
-            tv_city.setText("HaNoi");
-            Get3HoursData("HaNoi");
+            tv_city.setText("Hà Nội");
+            Get3HoursData("Hà Nội");
         } else {
             Get3HoursData(city_name);
         }
