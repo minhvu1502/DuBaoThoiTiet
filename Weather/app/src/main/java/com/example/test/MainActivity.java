@@ -29,19 +29,30 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
+import java.io.IOException;
+import java.io.StringReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import okio.Timeout;
 
 
 public class MainActivity extends AppCompatActivity {
     EditText txt_city;
     Button  btn_next;
     ImageView img_weather;
-    TextView tv_city, tv_country, tv_nhietdo, tv_status, tv_doam, tv_may, tv_gio, tv_date;
-    ImageButton btn_search,btn_location;
-    String city_name, kinhdo ="", vido = "";
+    TextView tv_city, tv_country, tv_nhietdo, tv_status, tv_doam, tv_may, tv_gio, tv_date, tv_lat, tv_lng;
+    ImageButton btn_search,btn_location, btn_back;
+    String city_name, kinhdo="", vido="", toado="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,11 +62,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         AnhXa();
         GetCurrentWeatherDefault("Hà Nội");
-        btn_location.setOnClickListener(new View.OnClickListener() {
+        btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MapsActivity.class);
-                startActivity(intent);
+                onBackPressed();
             }
         });
         btn_search.setOnClickListener(new View.OnClickListener() {
@@ -68,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else {
                     city = Validate_places(city);
-                    GetCurrentWeather(city);
+                        GetLocation(city);
                 }
             }
         });
@@ -112,34 +122,23 @@ public class MainActivity extends AppCompatActivity {
 //        });
 //        requestQueue.add(stringRequest);
 //    }
-    public void GetLocation(String data){
-        String url_places = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input="+data+"&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&key=AIzaSyBE90kLZE6B5l8Ba1cPlFsCpOdJOgbWgA4";
-        RequestQueue requestQueue_places = Volley.newRequestQueue(MainActivity.this);
-        final StringRequest stringRequest_places = new StringRequest(Request.Method.GET, url_places, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    JSONArray jsonArrayCandidates = jsonObject.getJSONArray("candidates");
-                    JSONObject jsonObject1 = jsonArrayCandidates.getJSONObject(0);
-                    JSONObject jsonObjectGeometry = jsonObject1.getJSONObject("geometry");
-                    JSONObject jsonObjectLocation = jsonObjectGeometry.getJSONObject("location");
-                    kinhdo = jsonObjectLocation.getString("lng");
-                    vido = jsonObjectLocation.getString("lat");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-            }
-        });
-        requestQueue_places.add(stringRequest_places);
-    }
-    public void GetCurrentWeather(String data) {
-                GetLocation(data);
-               //bien luu cac request gui len server
+private void GetLocation(String city) {
+    city = city.trim();
+    city = city.replaceAll("\\s+", "");
+    String url = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=" + city + "&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&key=AIzaSyBE90kLZE6B5l8Ba1cPlFsCpOdJOgbWgA4";
+    RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
+    final StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+        @Override
+        public void onResponse(String response) {
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+                JSONArray jsonArrayCandidates = jsonObject.getJSONArray("candidates");
+                JSONObject jsonObject1 = jsonArrayCandidates.getJSONObject(0);
+                JSONObject jsonObjectGeometry = jsonObject1.getJSONObject("geometry");
+                JSONObject jsonObjectLocation = jsonObjectGeometry.getJSONObject("location");
+                kinhdo = jsonObjectLocation.getString("lng");
+                vido = jsonObjectLocation.getString("lat");
+//                bien luu cac request gui len server
                RequestQueue requestQueue_weather = Volley.newRequestQueue(MainActivity.this);
                //Doc du lieu duong dan
                String url_weather = "https://api.openweathermap.org/data/2.5/weather?lat="+vido+"&lon="+kinhdo+"&units=metric&appid=92c6161e0d9ddd64a865f69b71a89c31&lang=vi";
@@ -173,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
                            Double a = Double.valueOf(nhietdo);
                            String Nhietdo = String.valueOf(a.intValue());
                            tv_nhietdo.setText(Nhietdo + "°C");
-                           tv_doam.setText("Độ ẩm: " + doam + "%");
+//                           tv_doam.setText("Độ ẩm: " + doam + "%");
 
                            JSONObject jsonObjectWind = jsonObject.getJSONObject("wind");
                            String wind = jsonObjectWind.getString("speed");
@@ -197,10 +196,91 @@ public class MainActivity extends AppCompatActivity {
                    }
                });
                requestQueue_weather.add(stringRequest_weather);
-    }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Toast.makeText(MainActivity.this, "Không tìm thấy", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }, new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+        }
+    });
+    requestQueue.add(stringRequest);
+}
+//    public void GetCurrentWeather(String data) {
+//        GetLocation(data);
+//        while (toado == null){
+//            try {
+//                Thread.sleep(1000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        Log.d("toa do: ",toado);
+//             //bien luu cac request gui len server
+////               RequestQueue requestQueue_weather = Volley.newRequestQueue(MainActivity.this);
+////               //Doc du lieu duong dan
+////               String url_weather = "https://api.openweathermap.org/data/2.5/weather?lat="+vido+"&lon="+kinhdo+"&units=metric&appid=92c6161e0d9ddd64a865f69b71a89c31&lang=vi";
+////               final StringRequest stringRequest_weather = new StringRequest(Request.Method.GET, url_weather, new Response.Listener<String>() {
+////                   @Override
+////                   public void onResponse(String response) {
+////                       try {
+////                           //nhận dữ liệu trả về từ api
+////                           JSONObject jsonObject = new JSONObject(response);
+////                           String day = jsonObject.getString("dt");
+////                           String name = jsonObject.getString("name");
+////                           city_name = name;
+////                           tv_city.setText("Tên thành phố: " + name);
+////                           long l = Long.valueOf(day);
+////                           Date date = new Date(l * 1000L);
+////                           SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE dd-MM-yyyy HH:mm");
+////                           String Day = simpleDateFormat.format(date);
+////                           tv_date.setText("Ngày cập nhật: " + Day);
+////                           JSONArray jsonArray = jsonObject.getJSONArray("weather");
+////                           JSONObject jsonObjectWeather = jsonArray.getJSONObject(0);
+////                           //get status
+////                           String status = jsonObjectWeather.getString("description");
+////                           String icon = jsonObjectWeather.getString("icon");
+////                           //get image
+////                           Picasso.get().load("http://openweathermap.org/img/wn/" + icon + ".png").into(img_weather);
+////                           tv_status.setText(status);
+////                           JSONObject jsonObjectMain = jsonObject.getJSONObject("main");
+////                           String nhietdo = jsonObjectMain.getString("temp");
+////                           String doam = jsonObjectMain.getString("humidity");
+////
+////                           Double a = Double.valueOf(nhietdo);
+////                           String Nhietdo = String.valueOf(a.intValue());
+////                           tv_nhietdo.setText(Nhietdo + "°C");
+//////                           tv_doam.setText("Độ ẩm: " + doam + "%");
+////
+////                           JSONObject jsonObjectWind = jsonObject.getJSONObject("wind");
+////                           String wind = jsonObjectWind.getString("speed");
+////                           tv_gio.setText("Gió: " + wind + "m/s");
+////
+////                           JSONObject jsonObjectCloud = jsonObject.getJSONObject("clouds");
+////                           String cloud = jsonObjectCloud.getString("all");
+////                           tv_may.setText("Mây: " + cloud + "%");
+////
+////                           JSONObject jsonObjectSys = jsonObject.getJSONObject("sys");
+////                           String country = jsonObjectSys.getString("country");
+////                           tv_country.setText("Tên quốc gia: " + country);
+////                       } catch (JSONException e) {
+////                           e.printStackTrace();
+////                       }
+////                   }
+////               }, new Response.ErrorListener() {
+////                   @Override
+////                   public void onErrorResponse(VolleyError error) {
+////                       Toast.makeText(MainActivity.this, "Không tìm thấy", Toast.LENGTH_SHORT).show();
+////                   }
+////               });
+////               requestQueue_weather.add(stringRequest_weather);
+////
+//    }
 
     private void AnhXa() {
-        btn_location = (ImageButton) findViewById(R.id.btn_location);
         txt_city = (EditText) findViewById(R.id.txt_city);
         btn_search = (ImageButton) findViewById(R.id.btn_search);
         btn_next = (Button) findViewById(R.id.btn_next);
@@ -213,6 +293,7 @@ public class MainActivity extends AppCompatActivity {
         tv_may = (TextView) findViewById(R.id.tv_may);
         tv_gio = (TextView) findViewById(R.id.tv_gio);
         tv_date = (TextView) findViewById(R.id.tv_hours);
+        btn_back = (ImageButton)findViewById(R.id.btn_back);
     }
     public void GetCurrentWeatherDefault(String data) {
 
@@ -269,7 +350,6 @@ public class MainActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(MainActivity.this, "Không tìm thấy", Toast.LENGTH_SHORT).show();
             }
         });
         requestQueue.add(stringRequest);

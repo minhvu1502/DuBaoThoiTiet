@@ -22,10 +22,10 @@ public class HomeMenu extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listView);
 
         ArrayList<Data> list1 = new ArrayList<Data>();
-        list1.add(new Data(R.drawable.loc1, "Thời tiết hiện tại của thiết bị"));
-        list1.add(new Data(R.drawable.search1, "Xem thời tiết theo địa điểm nhập bất kì"));
-        list1.add(new Data(R.drawable.rain, "Xem thời tiết theo địa điểm nhập bất kì và dự báo các ngày kế tiếp"));
-        list1.add(new Data(R.drawable.rain, "Xem thời tiết trên Google Map"));
+        list1.add(new Data(R.drawable.loc2, "Thời tiết hiện tại của thiết bị"));
+        list1.add(new Data(R.drawable.search2, "Xem thời tiết theo địa điểm nhập bất kì"));
+        list1.add(new Data(R.drawable.calandar, "Xem thời tiết theo địa điểm nhập bất kì và dự báo các ngày kế tiếp"));
+        list1.add(new Data(R.drawable.googlmap, "Xem thời tiết trên Google Map"));
         CustomAdapter2 adapter = new CustomAdapter2(HomeMenu.this, R.layout.activity_custom_l_v, list1);
         listView.setAdapter(adapter);
 
