@@ -3,7 +3,6 @@ package com.example.test;
 import androidx.fragment.app.FragmentActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -83,9 +82,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void AnhXa() {
-        txt_tim = (EditText) findViewById(R.id.txt_city);
+        txt_tim = (EditText) findViewById(R.id.txt_seven_city);
         btn_tim = (Button) findViewById(R.id.btn_tim);
-        btn_back = (ImageButton) findViewById(R.id.btn_back);
+        btn_back = (ImageButton) findViewById(R.id.btn_seven_back);
     }
 
     private void GetLocation(String city) {

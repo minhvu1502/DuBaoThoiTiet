@@ -40,7 +40,7 @@ public class HomeMenu extends AppCompatActivity {
                     intent = new Intent(HomeMenu.this, MainActivity.class);
                     startActivity(intent);
                 } else if (position == 2) {
-                    intent = new Intent(HomeMenu.this, MainActivity.class);
+                    intent = new Intent(HomeMenu.this, seven_day_forecast.class);
                     startActivity(intent);
                 } else {
                     intent = new Intent(HomeMenu.this, MapsActivity.class);

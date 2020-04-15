@@ -3,12 +3,171 @@ package com.example.test;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 public class seven_day_forecast extends AppCompatActivity {
+    ListView list_;
+    TextView tv_city;
+    EditText txt_city;
+    ImageButton btn_back, btn_search;
 
+    ArrayList<Weather_SevenDay> weather_item;
+    String kinhdo="", vido = "", city_name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seven_day_forecast);
+//        list_.setVisibility(View.INVISIBLE);
+//        tv_city.setVisibility(View.INVISIBLE);
+        AnhXa();
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+        btn_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String city = txt_city.getText().toString();
+                if (city.equals(""))
+                {
+                    Toast.makeText(seven_day_forecast.this, "Hãy nhập tên thành phố", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    city = Validate_places(city);
+                    GetLocation(city);
+                }
+            }
+        });
+        list_.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
+    }
+    private void GetLocation(String city) {
+        city = city.trim();
+        city = city.replaceAll("\\s+", "");
+        String url = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=" + city + "&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&key=AIzaSyBE90kLZE6B5l8Ba1cPlFsCpOdJOgbWgA4";
+        RequestQueue requestQueue = Volley.newRequestQueue(seven_day_forecast.this);
+        final StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray jsonArrayCandidates = jsonObject.getJSONArray("candidates");
+                    JSONObject jsonObject1 = jsonArrayCandidates.getJSONObject(0);
+                    city_name = jsonObject1.getString("name");
+                    JSONObject jsonObjectGeometry = jsonObject1.getJSONObject("geometry");
+                    JSONObject jsonObjectLocation = jsonObjectGeometry.getJSONObject("location");
+                    kinhdo = jsonObjectLocation.getString("lng");
+                    vido = jsonObjectLocation.getString("lat");
+//                bien luu cac request gui len server
+                    RequestQueue requestQueue_weather = Volley.newRequestQueue(seven_day_forecast.this);
+                    //Doc du lieu duong dan
+                    String url_weather = "https://api.openweathermap.org/data/2.5/onecall?lat="+vido+"&lon="+kinhdo+"&units=metric&appid=92c6161e0d9ddd64a865f69b71a89c31&lang=vi";
+                    final StringRequest stringRequest_weather = new StringRequest(Request.Method.GET, url_weather, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                ArrayList<Weather_SevenDay> weather = new ArrayList<Weather_SevenDay>();
+                                //nhận dữ liệu trả về từ api
+                                JSONObject jsonObject = new JSONObject(response);
+                                JSONArray jsonArrayDaily = jsonObject.getJSONArray("daily");
+                                for (int i = 0;i< jsonArrayDaily.length();i++){
+                                    JSONObject jsonObjectDaily = jsonArrayDaily.getJSONObject(i);
+                                    //get day
+                                    String day = jsonObjectDaily.getString("dt");
+                                    long l = Long.valueOf(day);
+                                    Date date = new Date(l * 1000L);
+                                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE dd-MM-yyyy");
+                                    String Day = simpleDateFormat.format(date);
+
+                                    //get temp
+                                    JSONObject jsonObjectTemp = jsonObjectDaily.getJSONObject("temp");
+                                    String Temp_max, Temp_min;
+                                    Temp_max = jsonObjectTemp.getString("max");
+                                    Temp_min = jsonObjectTemp.getString("min");
+
+                                    //Làm tròn nhiệt độ
+                                    Double a = Double.valueOf(Temp_min);
+                                    Double b = Double.valueOf(Temp_max);
+
+                                    String temp_max, temp_min;
+                                    temp_min = String.valueOf(a);
+                                    temp_max = String.valueOf(b);
+
+                                    JSONArray jsonArrayWeather = jsonObjectDaily.getJSONArray("weather");
+                                    JSONObject jsonObjectWeather = jsonArrayWeather.getJSONObject(0);
+                                    String description = jsonObjectWeather.getString("description");
+                                    String icon = jsonObjectWeather.getString("icon");
+
+                                    //Gán giá trị
+
+                                    Adapter_SevenDay customAdapter;
+                                    weather.add(new Weather_SevenDay(Day,description,icon, temp_max, temp_min));
+                                    customAdapter = new Adapter_SevenDay(seven_day_forecast.this, weather);
+                                    list_.setAdapter(customAdapter);
+                                }
+                                tv_city.setText(city_name);
+                                tv_city.setVisibility(View.VISIBLE);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(seven_day_forecast.this, "Không tìm thấy", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    requestQueue_weather.add(stringRequest_weather);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(seven_day_forecast.this, "Không tìm thấy", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        });
+        requestQueue.add(stringRequest);
+    }
+    public void AnhXa(){
+        list_ = (ListView)findViewById(R.id.list_seven);
+        tv_city = (TextView)findViewById(R.id.tv_sevenday_city);
+        txt_city = (EditText)findViewById(R.id.txt_seven_city);
+        btn_search = (ImageButton)findViewById(R.id.btn_seven_search);
+        btn_back = (ImageButton)findViewById(R.id.btn_seven_back);
+    }
+    public String Validate_places(String data) {
+        data = data.trim();
+        data = data.replaceAll("\\s+", "");
+        return data;
     }
 }
