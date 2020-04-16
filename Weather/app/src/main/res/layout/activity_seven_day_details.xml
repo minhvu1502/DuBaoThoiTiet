@@ -124,7 +124,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/hum" />
+                app:srcCompat="@drawable/rainn" />
 
             <TextView
 
@@ -149,7 +149,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/cloud" />
+                app:srcCompat="@drawable/cloudddd" />
 
             <TextView
                 android:id="@+id/tv_may"
@@ -173,7 +173,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/wind" />
+                app:srcCompat="@drawable/snowflake" />
 
             <TextView
                 android:id="@+id/tv_gio"
