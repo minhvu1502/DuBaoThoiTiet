@@ -90,7 +90,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private void GetLocation(String city) {
         city = city.trim();
         city = city.replaceAll("\\s+", "");
-        String url = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=" + city + "&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&key=AIzaSyBE90kLZE6B5l8Ba1cPlFsCpOdJOgbWgA4";
+        String url = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=" + city + "&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&key=AIzaSyD4oQg9klcCD0fVn-2sb5wbPrNNZs4bhJ4";
         RequestQueue requestQueue = Volley.newRequestQueue(MapsActivity.this);
         final StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
