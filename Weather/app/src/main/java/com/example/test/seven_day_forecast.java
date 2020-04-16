@@ -2,6 +2,7 @@ package com.example.test;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -33,8 +34,8 @@ public class seven_day_forecast extends AppCompatActivity {
     EditText txt_city;
     ImageButton btn_back, btn_search;
 
-    ArrayList<Weather_SevenDay> weather_item;
-    String kinhdo="", vido = "", city_name;
+    ArrayList<Weather_SevenDay> weather_item = new ArrayList<Weather_SevenDay>();
+    String kinhdo="", vido = "", city_name, formatted_address;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +52,7 @@ public class seven_day_forecast extends AppCompatActivity {
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                weather_item.clear();
                 String city = txt_city.getText().toString();
                 if (city.equals(""))
                 {
@@ -65,7 +67,17 @@ public class seven_day_forecast extends AppCompatActivity {
         list_.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                Intent intent = new Intent(seven_day_forecast.this, Seven_day_details.class);
+                intent.putExtra("city_name",city_name);
+                intent.putExtra("country", formatted_address);
+                intent.putExtra("Day",weather_item.get(position).getDay());
+                intent.putExtra("status",weather_item.get(position).getStatus());
+                intent.putExtra("image",weather_item.get(position).getImage());
+                intent.putExtra("temp",weather_item.get(position).getMax());
+                intent.putExtra("doam",weather_item.get(position).getDoam());
+                intent.putExtra("gio",weather_item.get(position).getGio());
+                intent.putExtra("may",weather_item.get(position).getMay());
+                startActivity(intent);
             }
         });
     }
@@ -81,7 +93,11 @@ public class seven_day_forecast extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(response);
                     JSONArray jsonArrayCandidates = jsonObject.getJSONArray("candidates");
                     JSONObject jsonObject1 = jsonArrayCandidates.getJSONObject(0);
-                    city_name = jsonObject1.getString("name");
+                    String name = jsonObject1.getString("name");
+                    city_name = name;
+                    String formatted_addr = jsonObject1.getString("formatted_address");
+                    String[] country = formatted_addr.split(", ");
+                    formatted_address = country[country.length-1];
                     JSONObject jsonObjectGeometry = jsonObject1.getJSONObject("geometry");
                     JSONObject jsonObjectLocation = jsonObjectGeometry.getJSONObject("location");
                     kinhdo = jsonObjectLocation.getString("lng");
@@ -121,6 +137,14 @@ public class seven_day_forecast extends AppCompatActivity {
                                     temp_min = String.valueOf(a);
                                     temp_max = String.valueOf(b);
 
+                                    //get wind, cloud, humidity
+
+                                    String doam = jsonObjectDaily.getString("humidity");
+
+                                    String gio = jsonObjectDaily.getString("wind_speed");
+
+                                    String may = jsonObjectDaily.getString("clouds");
+
                                     JSONArray jsonArrayWeather = jsonObjectDaily.getJSONArray("weather");
                                     JSONObject jsonObjectWeather = jsonArrayWeather.getJSONObject(0);
                                     String description = jsonObjectWeather.getString("description");
@@ -130,6 +154,7 @@ public class seven_day_forecast extends AppCompatActivity {
 
                                     Adapter_SevenDay customAdapter;
                                     weather.add(new Weather_SevenDay(Day,description,icon, temp_max, temp_min));
+                                    weather_item.add(new Weather_SevenDay(Day,description,icon,temp_max,doam, gio, may));
                                     customAdapter = new Adapter_SevenDay(seven_day_forecast.this, weather);
                                     list_.setAdapter(customAdapter);
                                 }
@@ -142,7 +167,7 @@ public class seven_day_forecast extends AppCompatActivity {
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(seven_day_forecast.this, "Không tìm thấy", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(seven_day_forecast.this, "Không có dữ liệu", Toast.LENGTH_SHORT).show();
                         }
                     });
                     requestQueue_weather.add(stringRequest_weather);

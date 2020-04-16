@@ -54,6 +54,43 @@ public class Weather_SevenDay {
     private String Status;
     private String Image;
     private String max;
-    private String min;
 
+    public String getDoam() {
+        return doam;
+    }
+
+    public void setDoam(String doam) {
+        this.doam = doam;
+    }
+
+    public String getGio() {
+        return gio;
+    }
+
+    public void setGio(String gio) {
+        this.gio = gio;
+    }
+
+    public String getMay() {
+        return may;
+    }
+
+    public void setMay(String may) {
+        this.may = may;
+    }
+
+    private String min;
+    private String doam;
+    private String gio;
+    private String may;
+
+    public Weather_SevenDay(String day, String status, String image, String max, String doam, String gio, String may) {
+        Day = day;
+        Status = status;
+        Image = image;
+        this.max = max;
+        this.doam = doam;
+        this.gio = gio;
+        this.may = may;
+    }
 }

@@ -7,77 +7,34 @@
     android:background="@drawable/bg"
     tools:context=".MainActivity"
     >
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:paddingTop="5dp"
-        android:weightSum="8"
-        app:layout_constraintEnd_toEndOf="parent"
+
+    <ImageButton
+        android:id="@+id/btn_seven_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/bg_search"
+        android:src="@drawable/back"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:id="@+id/btn_seven_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_search"
-                android:src="@drawable/back" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="6"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/txt_seven_city"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_search"
-                android:ems="10"
-                android:gravity="center"
-                android:hint="Search"
-                android:inputType="text" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:id="@+id/btn_seven_search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_search"
-                android:src="@drawable/timkiem" />
-        </LinearLayout>
-    </LinearLayout>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_hours"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginBottom="28dp"
         android:gravity="center"
         android:text="Ngày Cập Nhật"
         android:textColor="@android:color/widget_edittext_dark"
         android:textSize="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/tv_country"
@@ -87,6 +44,7 @@
         android:gravity="center"
         android:textColor="@android:color/widget_edittext_dark"
         android:textSize="18dp"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_name"
@@ -119,8 +77,9 @@
         android:id="@+id/tv_line_status"
         android:layout_width="wrap_content"
         android:layout_height="37dp"
-        android:gravity="center"
+        android:layout_marginTop="5dp"
 
+        android:gravity="center"
         android:text="Trạng Thái"
         android:textColor="@android:color/widget_edittext_dark"
         android:textSize="20dp"
@@ -132,15 +91,16 @@
     <TextView
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
-        android:layout_height="28dp"
-        android:layout_marginTop="5dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="80dp"
         android:gravity="center"
         android:text="Tên Thành Phố:"
         android:textColor="@android:color/widget_edittext_dark"
         android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
