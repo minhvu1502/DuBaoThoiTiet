@@ -41,9 +41,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("Dự Báo Thời Tiết");
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        setTitle("Dự Báo Thời Tiết");
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_main);
         AnhXa();
         GetLocation("HàNội");
@@ -184,16 +184,16 @@ private void GetLocation(String city) {
         tv_date = (TextView) findViewById(R.id.tv_hours);
         btn_back = (ImageButton)findViewById(R.id.btn_seven_back);
     }
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        Intent intent = new Intent();
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            intent.setClass(MainActivity.this, HomeMenu.class);
-            startActivity(intent);
-            MainActivity.this.finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        Intent intent = new Intent();
+//        int id = item.getItemId();
+//        if (id == android.R.id.home) {
+//            intent.setClass(MainActivity.this, HomeMenu.class);
+//            startActivity(intent);
+//            MainActivity.this.finish();
+//            return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 }

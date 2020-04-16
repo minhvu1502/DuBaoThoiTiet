@@ -134,8 +134,8 @@ public class seven_day_forecast extends AppCompatActivity {
                                     Double b = Double.valueOf(Temp_max);
 
                                     String temp_max, temp_min;
-                                    temp_min = String.valueOf(a);
-                                    temp_max = String.valueOf(b);
+                                    temp_min = String.valueOf(a.intValue());
+                                    temp_max = String.valueOf(b.intValue());
 
                                     //get wind, cloud, humidity
 
