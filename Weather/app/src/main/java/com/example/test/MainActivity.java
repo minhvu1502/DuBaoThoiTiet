@@ -1,12 +1,9 @@
 package com.example.test;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     EditText txt_city;
     Button  btn_next;
     ImageView img_weather;
-    TextView tv_city, tv_country, tv_nhietdo, tv_status, tv_doam, tv_may, tv_gio, tv_date, tv_lat, tv_lng;
+    TextView tv_city, tv_country, tv_nhietdo, tv_status, tv_doam, tv_may, tv_gio, tv_date, tv_sunrise, tv_sunset;
     ImageButton btn_search,btn_location, btn_back;
     String city_name, kinhdo="", vido="", formatted_address;
     @Override
@@ -142,9 +139,21 @@ private void GetLocation(String city) {
                            String cloud = jsonObjectCloud.getString("all");
                            tv_may.setText("Mây: " + cloud + "%");
 
-//                           JSONObject jsonObjectSys = jsonObject.getJSONObject("sys");
-//                           String country = jsonObjectSys.getString("country");
-                           tv_country.setText("Tên quốc gia: " + formatted_address);
+                           JSONObject jsonObjectSys = jsonObject.getJSONObject("sys");
+                           String sunrise = jsonObjectSys.getString("sunrise");
+                           String sunset = jsonObjectSys.getString("sunset");
+                           l = Long.valueOf(sunrise);
+                           date = new Date(l * 1000L);
+                           simpleDateFormat = new SimpleDateFormat("HH:mm");
+                           Day = simpleDateFormat.format(date);
+                           tv_sunrise.setText("Mặt trời mọc: "+Day);
+                           l = Long.valueOf(sunset);
+                           date = new Date(l * 1000L);
+                           simpleDateFormat = new SimpleDateFormat("HH:mm");
+                           Day = simpleDateFormat.format(date);
+                           tv_sunset.setText("Mặt trời lặn: "+Day);
+                           tv_country.setText("Quốc Gia: "+formatted_address);
+
                        } catch (JSONException e) {
                            e.printStackTrace();
                        }
@@ -159,23 +168,25 @@ private void GetLocation(String city) {
 
             } catch (JSONException e) {
                 e.printStackTrace();
-                Toast.makeText(MainActivity.this, "Không tìm thấy", Toast.LENGTH_SHORT).show();
             }
         }
     }, new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
+            Toast.makeText(MainActivity.this, "Không tìm thấy", Toast.LENGTH_SHORT).show();
         }
     });
     requestQueue.add(stringRequest);
 }
     private void AnhXa() {
+        tv_sunrise = (TextView)findViewById(R.id.tv_sunrise);
+        tv_sunset = (TextView)findViewById(R.id.tv_sunset);
         txt_city = (EditText) findViewById(R.id.txt_seven_city);
-        btn_search = (ImageButton) findViewById(R.id.btn_seven_search);
+        btn_search = (ImageButton) findViewById(R.id.btn_tim);
         btn_next = (Button) findViewById(R.id.btn_next);
         img_weather = (ImageView) findViewById(R.id.img_weather);
         tv_city = (TextView) findViewById(R.id.tv_name);
-        tv_country = (TextView) findViewById(R.id.tv_country);
+        tv_country = (TextView) findViewById(R.id.tv_city);
         tv_nhietdo = (TextView) findViewById(R.id.tv_nhietdo);
         tv_status = (TextView) findViewById(R.id.tv_line_status);
         tv_doam = (TextView) findViewById(R.id.tv_doam);

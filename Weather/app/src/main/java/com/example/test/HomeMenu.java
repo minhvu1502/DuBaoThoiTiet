@@ -35,7 +35,8 @@ public class HomeMenu extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) {
-                    Toast.makeText(HomeMenu.this, "111" + position, Toast.LENGTH_SHORT).show();
+                    intent = new Intent(HomeMenu.this,  weather_location.class);
+                    startActivity(intent);
                 } else if (position == 1) {
                     intent = new Intent(HomeMenu.this, MainActivity.class);
                     startActivity(intent);

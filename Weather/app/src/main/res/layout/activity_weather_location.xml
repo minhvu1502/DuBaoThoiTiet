@@ -5,74 +5,90 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg"
-    tools:context=".MainActivity"
+    tools:context=".weather_location"
     >
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="50dp"
         android:orientation="horizontal"
-        android:paddingTop="5dp"
-        android:weightSum="8"
+        android:weightSum="2"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/tv_hours">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:weightSum="3">
 
-            <ImageButton
-                android:id="@+id/btn_seven_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_search"
-                android:src="@drawable/back" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="6"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/txt_seven_city"
+            <ImageView
+                android:id="@+id/imageView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_search"
-                android:ems="10"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/sunrise" />
+
+            <TextView
+                android:id="@+id/tv_sunrise"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
                 android:gravity="center"
-                android:hint="Search"
-                android:inputType="text" />
+                android:text="Mặt trời mọc"
+                android:textColor="@android:color/white"
+                android:textSize="16dp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:weightSum="3">
 
-            <ImageButton
-                android:id="@+id/btn_tim"
-                android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_search"
-                android:src="@drawable/timkiem" />
+                android:layout_weight="1"
+                app:srcCompat="@drawable/sunset" />
+
+            <TextView
+                android:id="@+id/tv_sunset"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="Mặt trời lặn"
+                android:textColor="@android:color/white"
+                android:textSize="16dp" />
         </LinearLayout>
     </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/btn_seven_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/bg_search"
+        android:src="@drawable/back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_hours"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_marginTop="5dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
         android:gravity="center"
         android:text="Ngày Cập Nhật"
         android:textColor="@android:color/white"
@@ -86,13 +102,13 @@
         android:id="@+id/tv_city"
         android:layout_width="wrap_content"
         android:layout_height="28dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:gravity="center"
         android:textColor="@android:color/white"
         android:textSize="18dp"
         android:textStyle="bold"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_name"
         tools:text="Quốc Gia:" />
@@ -111,6 +127,7 @@
         android:id="@+id/tv_nhietdo"
         android:layout_width="wrap_content"
         android:layout_height="42dp"
+        android:layout_marginTop="5dp"
         android:gravity="center"
         android:text="35"
         android:textColor="@android:color/white"
@@ -126,35 +143,37 @@
         android:layout_width="wrap_content"
         android:layout_height="37dp"
         android:layout_marginTop="10dp"
+
         android:gravity="center"
         android:text="Trạng Thái"
         android:textColor="@android:color/white"
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_nhietdo" />
 
     <TextView
         android:id="@+id/tv_name"
+        style="@style/TextAppearance.AppCompat.Body1"
         android:layout_width="wrap_content"
-        android:layout_height="28dp"
-        android:layout_marginTop="15dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="60dp"
         android:gravity="center"
         android:text="Tên Thành Phố:"
         android:textColor="@android:color/white"
         android:textSize="18dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:orientation="horizontal"
         android:weightSum="3"
         app:layout_constraintEnd_toEndOf="parent"
@@ -231,84 +250,6 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="Tốc độ gió"
-                android:textColor="@android:color/white"
-                android:textSize="16dp" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/btn_next"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/bg_search"
-        android:text="Các Giờ Tiếp Theo"
-        android:textColor="@android:color/widget_edittext_dark"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="10dp"
-        android:orientation="horizontal"
-        android:weightSum="2"
-        app:layout_constraintBottom_toTopOf="@+id/btn_next"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_hours">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:weightSum="3">
-
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/sunrise" />
-
-            <TextView
-                android:id="@+id/tv_sunrise"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:gravity="center"
-                android:text="Mặt trời mọc"
-                android:textColor="@android:color/white"
-                android:textSize="16dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:weightSum="3">
-
-            <ImageView
-                android:id="@+id/imageView4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/sunset" />
-
-            <TextView
-                android:id="@+id/tv_sunset"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:gravity="center"
-                android:text="Mặt trời lặn"
                 android:textColor="@android:color/white"
                 android:textSize="16dp" />
         </LinearLayout>

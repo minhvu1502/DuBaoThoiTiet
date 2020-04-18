@@ -54,6 +54,48 @@ public class Weather_SevenDay {
     private String Status;
     private String Image;
     private String max;
+    private String Sunrise;
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    private String country;
+
+    public Weather_SevenDay(String country,String day, String status, String image, String max, String doam, String gio, String may, String sunrise, String sunset) {
+        Day = day;
+        this.country = country;
+        Status = status;
+        Image = image;
+        this.max = max;
+        Sunrise = sunrise;
+        Sunset = sunset;
+        this.doam = doam;
+        this.gio = gio;
+        this.may = may;
+    }
+
+    private String Sunset;
+
+    public String getSunrise() {
+        return Sunrise;
+    }
+
+    public void setSunrise(String sunrise) {
+        Sunrise = sunrise;
+    }
+
+    public String getSunset() {
+        return Sunset;
+    }
+
+    public void setSunset(String sunset) {
+        Sunset = sunset;
+    }
 
     public String getDoam() {
         return doam;

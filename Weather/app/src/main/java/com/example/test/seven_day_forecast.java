@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -77,6 +76,8 @@ public class seven_day_forecast extends AppCompatActivity {
                 intent.putExtra("doam",weather_item.get(position).getDoam());
                 intent.putExtra("gio",weather_item.get(position).getGio());
                 intent.putExtra("may",weather_item.get(position).getMay());
+                intent.putExtra("sunrise",weather_item.get(position).getSunrise());
+                intent.putExtra("sunset",weather_item.get(position).getSunset());
                 startActivity(intent);
             }
         });
@@ -150,11 +151,22 @@ public class seven_day_forecast extends AppCompatActivity {
                                     String description = jsonObjectWeather.getString("description");
                                     String icon = jsonObjectWeather.getString("icon");
 
+                                    String sunrise = jsonObjectDaily.getString("sunrise");
+                                    String sunset = jsonObjectDaily.getString("sunset");
+                                    l = Long.valueOf(sunrise);
+                                    date = new Date(l * 1000L);
+                                    simpleDateFormat = new SimpleDateFormat("HH:mm");
+                                    String Sunrise = simpleDateFormat.format(date);
+
+                                    l = Long.valueOf(sunset);
+                                    date = new Date(l * 1000L);
+                                    simpleDateFormat = new SimpleDateFormat("HH:mm");
+                                    String Sunset = simpleDateFormat.format(date);
                                     //Gán giá trị
 
                                     Adapter_SevenDay customAdapter;
                                     weather.add(new Weather_SevenDay(Day,description,icon, temp_max, temp_min));
-                                    weather_item.add(new Weather_SevenDay(Day,description,icon,temp_max,doam, gio, may));
+                                    weather_item.add(new Weather_SevenDay(formatted_address,Day,description,icon,temp_max,doam, gio, may,Sunset, Sunrise));
                                     customAdapter = new Adapter_SevenDay(seven_day_forecast.this, weather);
                                     list_.setAdapter(customAdapter);
                                 }
@@ -173,12 +185,13 @@ public class seven_day_forecast extends AppCompatActivity {
                     requestQueue_weather.add(stringRequest_weather);
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Toast.makeText(seven_day_forecast.this, "Không tìm thấy", Toast.LENGTH_SHORT).show();
+
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Toast.makeText(seven_day_forecast.this, "Không tìm thấy", Toast.LENGTH_SHORT).show();
             }
         });
         requestQueue.add(stringRequest);
@@ -187,7 +200,7 @@ public class seven_day_forecast extends AppCompatActivity {
         list_ = (ListView)findViewById(R.id.list_seven);
         tv_city = (TextView)findViewById(R.id.tv_sevenday_city);
         txt_city = (EditText)findViewById(R.id.txt_seven_city);
-        btn_search = (ImageButton)findViewById(R.id.btn_seven_search);
+        btn_search = (ImageButton)findViewById(R.id.btn_tim);
         btn_back = (ImageButton)findViewById(R.id.btn_seven_back);
     }
     public String Validate_places(String data) {
