@@ -101,31 +101,32 @@
         android:id="@+id/img_weather"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        android:layout_marginStart="88dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_city"
         app:srcCompat="@drawable/sun" />
 
     <TextView
         android:id="@+id/tv_nhietdo"
-        android:layout_width="wrap_content"
-        android:layout_height="42dp"
+        android:layout_width="0dp"
+        android:layout_height="93dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="88dp"
         android:gravity="center"
         android:text="35"
         android:textColor="@android:color/white"
-        android:textSize="35dp"
+        android:textSize="50dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img_weather" />
+        app:layout_constraintStart_toEndOf="@+id/img_weather"
+        app:layout_constraintTop_toBottomOf="@+id/tv_city" />
 
     <TextView
         android:id="@+id/tv_line_status"
         android:layout_width="wrap_content"
         android:layout_height="37dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="9dp"
         android:gravity="center"
         android:text="Trạng Thái"
         android:textColor="@android:color/white"
@@ -134,13 +135,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_nhietdo" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="28dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="3dp"
         android:gravity="center"
         android:text="Tên Thành Phố:"
         android:textColor="@android:color/white"
@@ -148,12 +149,12 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView10" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="100dp"
         android:layout_marginTop="10dp"
         android:orientation="horizontal"
         android:weightSum="3"
@@ -313,5 +314,31 @@
                 android:textSize="16dp" />
         </LinearLayout>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="9dp"
+        android:gravity="center"
+        android:text="MinMax"
+        android:textColor="#ffffff"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_weather" />
+
+    <ImageView
+        android:id="@+id/imageView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="192dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="195dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        app:srcCompat="@drawable/marker" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,7 +13,7 @@ import com.squareup.picasso.Picasso;
 
 public class Seven_day_details extends AppCompatActivity {
     ImageButton btn_back;
-    TextView tv_city, tv_country, tv_temp, tv_status, tv_humility, tv_wind, tv_cloud, tv_day, tv_sunrise, tv_sunset;
+    TextView tv_city, tv_country, tv_temp, tv_status, tv_humility, tv_wind, tv_cloud, tv_day, tv_sunrise, tv_sunset, tv_minmax;
     ImageView img_status;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +29,8 @@ public class Seven_day_details extends AppCompatActivity {
         });
     }
     private void AnhXa(){
-        btn_back = (ImageButton)findViewById(R.id.btn_seven_details);
+        tv_minmax = (TextView)findViewById(R.id.textView);
+        btn_back = (ImageButton)findViewById(R.id.btn_seven_back);
         tv_sunrise = (TextView)findViewById(R.id.tv_sunrise);
         tv_sunset = (TextView)findViewById(R.id.tv_sunset);
         tv_city = (TextView)findViewById(R.id.tv_name);
@@ -44,6 +45,7 @@ public class Seven_day_details extends AppCompatActivity {
     }
     private void Getdata(){
         Intent intent = getIntent();
+        tv_minmax.setText(intent.getStringExtra("minmax"));
         tv_city.setText("Thành phố: "+intent.getStringExtra("city_name"));
         tv_country.setText("Quốc gia: "+intent.getStringExtra("country"));
         tv_status.setText(intent.getStringExtra("status"));

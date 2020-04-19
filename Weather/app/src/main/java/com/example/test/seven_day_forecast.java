@@ -68,6 +68,7 @@ public class seven_day_forecast extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(seven_day_forecast.this, Seven_day_details.class);
                 intent.putExtra("city_name",city_name);
+                intent.putExtra("minmax",weather_item.get(position).getFeels_like());
                 intent.putExtra("country", formatted_address);
                 intent.putExtra("Day",weather_item.get(position).getDay());
                 intent.putExtra("status",weather_item.get(position).getStatus());
@@ -129,7 +130,7 @@ public class seven_day_forecast extends AppCompatActivity {
                                     String Temp_max, Temp_min;
                                     Temp_max = jsonObjectTemp.getString("max");
                                     Temp_min = jsonObjectTemp.getString("min");
-
+                                    String temp = jsonObjectTemp.getString("day");
                                     //Làm tròn nhiệt độ
                                     Double a = Double.valueOf(Temp_min);
                                     Double b = Double.valueOf(Temp_max);
@@ -163,10 +164,10 @@ public class seven_day_forecast extends AppCompatActivity {
                                     simpleDateFormat = new SimpleDateFormat("HH:mm");
                                     String Sunset = simpleDateFormat.format(date);
                                     //Gán giá trị
-
+                                    String min_max_feelslike = temp_max+"° / "+temp_min+"°";
                                     Adapter_SevenDay customAdapter;
                                     weather.add(new Weather_SevenDay(Day,description,icon, temp_max, temp_min));
-                                    weather_item.add(new Weather_SevenDay(formatted_address,Day,description,icon,temp_max,doam, gio, may,Sunset, Sunrise));
+                                    weather_item.add(new Weather_SevenDay(formatted_address,Day,description,icon,temp, min_max_feelslike,doam, gio, may,Sunset, Sunrise));
                                     customAdapter = new Adapter_SevenDay(seven_day_forecast.this, weather);
                                     list_.setAdapter(customAdapter);
                                 }

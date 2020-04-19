@@ -66,10 +66,19 @@ public class Weather_SevenDay {
 
     private String country;
 
-    public Weather_SevenDay(String country,String day, String status, String image, String max, String doam, String gio, String may, String sunrise, String sunset) {
+    public String getFeels_like() {
+        return feels_like;
+    }
+
+    public void setFeels_like(String feels_like) {
+        this.feels_like = feels_like;
+    }
+
+    public Weather_SevenDay(String country, String day, String status, String image, String max, String feels_like, String doam, String gio, String may, String sunrise, String sunset) {
         Day = day;
         this.country = country;
         Status = status;
+        this.feels_like = feels_like;
         Image = image;
         this.max = max;
         Sunrise = sunrise;
@@ -78,7 +87,7 @@ public class Weather_SevenDay {
         this.gio = gio;
         this.may = may;
     }
-
+    private String feels_like;
     private String Sunset;
 
     public String getSunrise() {

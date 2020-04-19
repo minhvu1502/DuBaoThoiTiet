@@ -36,7 +36,7 @@ import java.util.Date;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
     EditText txt_tim;
-    ImageButton btn_tim;
+    ImageButton btn_tim, btn_earth, btn_type;
     ImageButton btn_back;
     ImageView img_icon;
     ArrayList<Weather_SevenDay> weather_item = new ArrayList<Weather_SevenDay>();
@@ -61,9 +61,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 onBackPressed();
             }
         });
+        btn_earth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                btn_earth.setEnabled(false);
+                btn_type.setEnabled(true);
+            }
+        });btn_type.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+                btn_earth.setEnabled(true);
+                btn_type.setEnabled(false);
+            }
+        });
         btn_tim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                weather_item.clear();
                 String data = txt_tim.getText().toString();
                 if (data.equals("")){
                     Toast.makeText(MapsActivity.this, "Hãy Nhập Tên Thành Phố", Toast.LENGTH_SHORT).show();
@@ -78,6 +94,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onClick(View v) {
                 Intent intent = new Intent(MapsActivity.this, Seven_day_details.class);
                 intent.putExtra("city_name",CityName);
+                intent.putExtra("minmax",weather_item.get(0).getFeels_like());
                 intent.putExtra("country", weather_item.get(0).getCountry());
                 intent.putExtra("Day",weather_item.get(0).getDay());
                 intent.putExtra("status",weather_item.get(0).getStatus());
@@ -94,6 +111,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void AnhXa() {
+        btn_earth = (ImageButton)findViewById(R.id.btn_earth);
+        btn_type = (ImageButton)findViewById(R.id.btn_type);
         txt_tim = (EditText) findViewById(R.id.txt_seven_city);
         btn_tim = (ImageButton) findViewById(R.id.btn_tim);
         btn_back = (ImageButton) findViewById(R.id.btn_seven_back);
@@ -101,8 +120,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         tv_city = (TextView)findViewById(R.id.tv_map_city);
         tv_country = (TextView)findViewById(R.id.tv_city);
         tv_date = (TextView)findViewById(R.id.tv_date);
-        tv_temp = (TextView)findViewById(R.id.tv_map_temp);
-        tv_max_min = (TextView)findViewById(R.id.tv_map_mm);
+        tv_temp = (TextView)findViewById(R.id.tvmap_temp);
+        tv_max_min = (TextView)findViewById(R.id.tvmap_minmax);
         btn_mapdetail = (Button)findViewById(R.id.btn_map_detail);
     }
 
@@ -141,8 +160,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 //nhận dữ liệu trả về từ api
                                 JSONObject jsonObject = new JSONObject(response);
                                 tv_country.setText(formatted_address);
-                                String day = jsonObject.getString("dt");
                                 tv_city.setText(CityName);
+                                String day = jsonObject.getString("dt");
                                 long l = Long.valueOf(day);
                                 Date date = new Date(l * 1000L);
                                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE dd-MM HH:mm");
@@ -163,7 +182,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 //get temp max, temp min
                                 String temp_max = jsonObjectMain.getString("temp_max");
                                 String temp_min = jsonObjectMain.getString("temp_min");
-
                                 //Lam tron
                                 Double a = Double.valueOf(temp_max);
                                 Double b = Double.valueOf(temp_min);
@@ -197,7 +215,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 date = new Date(l * 1000L);
                                 simpleDateFormat = new SimpleDateFormat("HH:mm");
                                 String Sunset = simpleDateFormat.format(date);
-                                weather_item.add(new Weather_SevenDay(formatted_address,Day,status,icon,temp_max,doam, wind, cloud,Sunset, Sunrise));
+                                String min_max_feelslike = temp_max+"° / "+temp_min+"°";
+                                weather_item.add(new Weather_SevenDay(formatted_address,Day,status,icon, nhietdo, min_max_feelslike,doam, wind, cloud,Sunset, Sunrise));
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -240,9 +259,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.getUiSettings().setZoomGesturesEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
-        mMap.setTrafficEnabled(true);
+//        mMap.setTrafficEnabled(true);
         mMap.setBuildingsEnabled(true);
+        mMap.getUiSettings().setRotateGesturesEnabled(true);
+        mMap.getUiSettings().setTiltGesturesEnabled(true);
         mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+        btn_earth.setEnabled(false);
         // Add a marker in Ho Chi Minh and move the camera
 //        LatLng city = new LatLng(10.8230989, 106.6296638);
 //        mMap.addMarker(new MarkerOptions().0(city).title("Hồ Chí Minh, Việt Nam"));

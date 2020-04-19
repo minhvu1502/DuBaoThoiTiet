@@ -13,7 +13,6 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="460dp"
-        android:layout_marginTop="5dp"
         map:layout_constraintEnd_toEndOf="parent"
         map:layout_constraintHorizontal_bias="0.0"
         map:layout_constraintStart_toStartOf="parent"
@@ -109,8 +108,9 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="Vị trí"
-                android:textColor="#000000"
-                android:textSize="15dp" />
+                android:textColor="#ffffff"
+                android:textSize="15dp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_city"
@@ -119,8 +119,9 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="Thành phố"
-                android:textColor="#000000"
-                android:textSize="15dp" />
+                android:textColor="#ffffff"
+                android:textSize="15dp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_date"
@@ -129,8 +130,9 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="Ngày tháng"
-                android:textColor="#000000"
-                android:textSize="15dp" />
+                android:textColor="#ffffff"
+                android:textSize="15dp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -156,24 +158,26 @@
                     android:src="@drawable/sun" />
 
                 <TextView
-                    android:id="@+id/tv_map_temp"
+                    android:id="@+id/tvmap_temp"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="27"
-                    android:textColor="#000000"
-                    android:textSize="25dp"></TextView>
+                    android:textColor="#ffffff"
+                    android:textSize="25dp"
+                    android:textStyle="bold"></TextView>
             </LinearLayout>
 
             <TextView
-                android:id="@+id/tv_map_mm"
+                android:id="@+id/tvmap_minmax"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="Max/Min"
-                android:textColor="#000000"></TextView>
+                android:textColor="#ffffff"
+                android:textStyle="bold"></TextView>
         </LinearLayout>
     </LinearLayout>
 
@@ -219,6 +223,25 @@
             android:text="Chia sẻ"
             android:textSize="13dp" />
     </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/btn_earth"
+        android:layout_width="45dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="260dp"
+        android:layout_marginEnd="10dp"
+        android:src="@drawable/earth"
+        map:layout_constraintEnd_toEndOf="parent"
+        map:layout_constraintTop_toTopOf="@+id/map" />
+
+    <ImageButton
+        android:id="@+id/btn_type"
+        android:layout_width="45dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:src="@drawable/maptype"
+        map:layout_constraintEnd_toEndOf="parent"
+        map:layout_constraintTop_toBottomOf="@+id/btn_earth" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

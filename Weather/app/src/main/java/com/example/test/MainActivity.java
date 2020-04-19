@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     EditText txt_city;
     Button  btn_next;
     ImageView img_weather;
-    TextView tv_city, tv_country, tv_nhietdo, tv_status, tv_doam, tv_may, tv_gio, tv_date, tv_sunrise, tv_sunset;
+    TextView tv_city, tv_country, tv_nhietdo, tv_status, tv_doam, tv_may, tv_gio, tv_date, tv_sunrise, tv_sunset, tv_maxmin;
     ImageButton btn_search,btn_location, btn_back;
     String city_name, kinhdo="", vido="", formatted_address;
     @Override
@@ -125,10 +125,13 @@ private void GetLocation(String city) {
                            JSONObject jsonObjectMain = jsonObject.getJSONObject("main");
                            String nhietdo = jsonObjectMain.getString("temp");
                            String doam = jsonObjectMain.getString("humidity");
-
+                           String feels_like = jsonObjectMain.getString("feels_like");
+                           String temp_max = jsonObjectMain.getString("temp_max");
+                           String temp_min = jsonObjectMain.getString("temp_min");
+                           tv_maxmin.setText(temp_max+"° / "+temp_min+"°");
                            Double a = Double.valueOf(nhietdo);
                            String Nhietdo = String.valueOf(a.intValue());
-                           tv_nhietdo.setText(Nhietdo + "°C");
+                           tv_nhietdo.setText(Nhietdo + "°");
                            tv_doam.setText("Độ ẩm: " + doam + "%");
 
                            JSONObject jsonObjectWind = jsonObject.getJSONObject("wind");
@@ -179,6 +182,7 @@ private void GetLocation(String city) {
     requestQueue.add(stringRequest);
 }
     private void AnhXa() {
+        tv_maxmin = (TextView)findViewById(R.id.textView);
         tv_sunrise = (TextView)findViewById(R.id.tv_sunrise);
         tv_sunset = (TextView)findViewById(R.id.tv_sunset);
         txt_city = (EditText) findViewById(R.id.txt_seven_city);
