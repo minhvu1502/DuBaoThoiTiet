@@ -95,8 +95,10 @@ private void GetLocation(String city) {
                 String[] country = formatted_addr.split(", ");
                 formatted_address = country[country.length-1];
                 JSONObject jsonObjectLocation = jsonObjectGeometry.getJSONObject("location");
-                kinhdo = jsonObjectLocation.getString("lng");
-                vido = jsonObjectLocation.getString("lat");
+                String _kinhdo = jsonObjectLocation.getString("lng");
+                String _vido = jsonObjectLocation.getString("lat");
+                kinhdo = _kinhdo;
+                vido = _vido;
 //                bien luu cac request gui len server
                RequestQueue requestQueue_weather = Volley.newRequestQueue(MainActivity.this);
                //Doc du lieu duong dan
