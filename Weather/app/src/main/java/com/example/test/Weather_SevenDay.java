@@ -74,7 +74,7 @@ public class Weather_SevenDay {
         this.feels_like = feels_like;
     }
 
-    public Weather_SevenDay(String country, String day, String status, String image, String max, String feels_like, String doam, String gio, String may, String sunrise, String sunset) {
+    public Weather_SevenDay(String country, String day, String status, String image, String max, String feels_like, String doam, String gio, String may, String sunset, String sunrise) {
         Day = day;
         this.country = country;
         Status = status;
