@@ -50,7 +50,7 @@ public class Seven_day_details extends AppCompatActivity {
         tv_country.setText("Quốc gia: "+intent.getStringExtra("country"));
         tv_status.setText(intent.getStringExtra("status"));
         Double a = Double.valueOf(intent.getStringExtra("temp"));
-        tv_temp.setText(String.valueOf(a.intValue())+"°C");
+        tv_temp.setText(String.valueOf(a.intValue())+"°");
         tv_humility.setText("Độ ẩm: " + intent.getStringExtra("doam") + "%");
         tv_wind.setText("Gió: " + intent.getStringExtra("gio") + "m/s");
         tv_cloud.setText("Mây: "+intent.getStringExtra("may")+"%");

@@ -1,9 +1,12 @@
 package com.example.test;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,7 +37,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationClickListener, GoogleMap.OnMyLocationButtonClickListener {
     EditText txt_tim;
     ImageButton btn_tim, btn_earth, btn_type;
     ImageButton btn_back;
@@ -196,7 +199,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 Double x = Double.valueOf(nhietdo);
                                 String Nhietdo = String.valueOf(x.intValue());
 
-                                tv_temp.setText(Nhietdo+"°C");
+                                tv_temp.setText(Nhietdo+"°");
 
                                 JSONObject jsonObjectWind = jsonObject.getJSONObject("wind");
                                 String wind = jsonObjectWind.getString("speed");
@@ -258,17 +261,35 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.getUiSettings().setCompassEnabled(true);
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.getUiSettings().setZoomGesturesEnabled(true);
-        mMap.getUiSettings().setMyLocationButtonEnabled(false);
+        mMap.setMyLocationEnabled(true);
+        mMap.setOnMyLocationButtonClickListener(this);
+        mMap.setOnMyLocationClickListener(this);
 //        mMap.setTrafficEnabled(true);
         mMap.setBuildingsEnabled(true);
         mMap.getUiSettings().setRotateGesturesEnabled(true);
         mMap.getUiSettings().setTiltGesturesEnabled(true);
-        mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-        btn_earth.setEnabled(false);
+        mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+        btn_earth.setEnabled(true);
+        btn_type.setEnabled(false);
         // Add a marker in Ho Chi Minh and move the camera
 //        LatLng city = new LatLng(10.8230989, 106.6296638);
 //        mMap.addMarker(new MarkerOptions().0(city).title("Hồ Chí Minh, Việt Nam"));
 //        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(city, 15));
         GetLocation("HàNội");
+    }
+
+    @Override
+    public void onMyLocationClick(@NonNull Location location) {
+        Toast.makeText(this, "Current location:\n" + location, Toast.LENGTH_LONG).show();
+        String myLat = String.valueOf(location.getLatitude());
+        String myLng = String.valueOf(location.getLongitude());
+        Log.i("lat", myLat);
+        Log.i("lng", myLng);
+    }
+
+    @Override
+    public boolean onMyLocationButtonClick() {
+//        Toast.makeText(this, "MyLocation button clicked", Toast.LENGTH_SHORT).show();
+        return false;
     }
 }

@@ -86,7 +86,7 @@
         android:id="@+id/tv_city"
         android:layout_width="wrap_content"
         android:layout_height="28dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:gravity="center"
         android:textColor="@android:color/white"
         android:textSize="18dp"
@@ -100,25 +100,25 @@
     <ImageView
         android:id="@+id/img_weather"
         android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginStart="88dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="95dp"
+        android:layout_marginStart="96dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_city"
         app:srcCompat="@drawable/sun" />
 
     <TextView
         android:id="@+id/tv_nhietdo"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="93dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="88dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="120dp"
         android:gravity="center"
         android:text="35"
         android:textColor="@android:color/white"
         android:textSize="50dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.076"
         app:layout_constraintStart_toEndOf="@+id/img_weather"
         app:layout_constraintTop_toBottomOf="@+id/tv_city" />
 
@@ -126,11 +126,10 @@
         android:id="@+id/tv_line_status"
         android:layout_width="wrap_content"
         android:layout_height="37dp"
-        android:layout_marginTop="9dp"
         android:gravity="center"
         android:text="Trạng Thái"
         android:textColor="@android:color/white"
-        android:textSize="20dp"
+        android:textSize="22dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.489"
@@ -240,8 +239,8 @@
     <Button
         android:id="@+id/btn_next"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginBottom="16dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
         android:background="@drawable/bg_search"
         android:text="Các Giờ Tiếp Theo"
         android:textColor="@android:color/widget_edittext_dark"
@@ -251,6 +250,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
+        android:id="@+id/linearLayout4"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="5dp"
@@ -281,7 +281,7 @@
             <TextView
                 android:id="@+id/tv_sunrise"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:gravity="center"
                 android:text="Mặt trời mọc"
@@ -306,7 +306,7 @@
             <TextView
                 android:id="@+id/tv_sunset"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:gravity="center"
                 android:text="Mặt trời lặn"
@@ -319,13 +319,13 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:layout_marginTop="9dp"
         android:gravity="center"
         android:text="MinMax"
         android:textColor="#ffffff"
         android:textSize="16dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/img_weather" />
 
@@ -334,7 +334,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="192dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="195dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

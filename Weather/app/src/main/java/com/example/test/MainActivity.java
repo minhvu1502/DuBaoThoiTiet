@@ -113,7 +113,7 @@ private void GetLocation(String city) {
                            Date date = new Date(l * 1000L);
                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE dd-MM-yyyy HH:mm");
                            String Day = simpleDateFormat.format(date);
-                           tv_date.setText("Ngày cập nhật: " + Day);
+                           tv_date.setText(Day);
                            JSONArray jsonArray = jsonObject.getJSONArray("weather");
                            JSONObject jsonObjectWeather = jsonArray.getJSONObject(0);
                            //get status
