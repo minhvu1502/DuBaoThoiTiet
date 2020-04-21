@@ -4,15 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.util.Xml;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import org.json.XML;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -20,23 +15,18 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.*;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.XMLFormatter;
-
-import javax.xml.XMLConstants;
 
 //http://api.openweathermap.org/data/2.5/forecast?q=hanoi&units=metric&cnt=7&appid=92c6161e0d9ddd64a865f69b71a89c31
 public class Second extends AppCompatActivity {
-    String city;
+    String city_name;
     ImageButton btn_back;
     TextView tv_city, tv_err;
     ListView listView;
@@ -51,12 +41,12 @@ public class Second extends AppCompatActivity {
         AnhXa();
 //        tv_err.setVisibility(View.INVISIBLE);
         final Intent intent = getIntent();
-        city = intent.getStringExtra("city");
-        if (city.equals("")) {
-            tv_city.setText("HaNoi");
-            Get3HoursData("HaNoi");
+        city_name = intent.getStringExtra("city_name");
+        if (city_name == null) {
+            tv_city.setText("Hà Nội");
+            Get3HoursData("Hà Nội");
         } else {
-            Get3HoursData(city);
+            Get3HoursData(city_name);
         }
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,8 +58,8 @@ public class Second extends AppCompatActivity {
 
     private void AnhXa() {
         tv_city = (TextView) findViewById(R.id.tv_name);
-        btn_back = (ImageButton) findViewById(R.id.btn_back);
-        listView = (ListView) findViewById(R.id.list_);
+        btn_back = (ImageButton) findViewById(R.id.btn_seven_back);
+        listView = (ListView) findViewById(R.id.list_seven);
         weather = new ArrayList<Weather>();
         customAdapter = new CustomAdapter(Second.this, weather);
         listView.setAdapter(customAdapter);
@@ -77,7 +67,7 @@ public class Second extends AppCompatActivity {
     }
 
     private void Get3HoursData(String data) {
-        String url = "http://api.openweathermap.org/data/2.5/forecast?q=" + data + "&units=metric&cnt=7&appid=92c6161e0d9ddd64a865f69b71a89c31";
+        String url = "http://api.openweathermap.org/data/2.5/forecast?q=" + data + "&units=metric&cnt=7&appid=92c6161e0d9ddd64a865f69b71a89c31&lang=vi";
         RequestQueue requestQueue = Volley.newRequestQueue(Second.this);
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {

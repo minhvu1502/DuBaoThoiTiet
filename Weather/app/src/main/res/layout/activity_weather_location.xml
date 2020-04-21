@@ -5,74 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg"
-    tools:context=".MainActivity"
+    tools:context=".weather_location"
     >
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:paddingTop="5dp"
-        android:weightSum="8"
-        app:layout_constraintEnd_toEndOf="parent"
+    <ImageButton
+        android:id="@+id/btn_location_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/bg_search"
+        android:foregroundGravity="center"
+        android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:id="@+id/btn_seven_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_search"
-                android:src="@drawable/back" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="6"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/txt_seven_city"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_search"
-                android:ems="10"
-                android:gravity="center"
-                android:hint="Search"
-                android:inputType="text" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:id="@+id/btn_tim"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_search"
-                android:src="@drawable/timkiem" />
-        </LinearLayout>
-    </LinearLayout>
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="?attr/actionModeCloseDrawable" />
 
     <TextView
         android:id="@+id/tv_hours"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="16dp"
         android:gravity="center"
         android:text="Ngày Cập Nhật"
         android:textColor="@android:color/white"
@@ -236,30 +189,15 @@
         </LinearLayout>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:background="@drawable/bg_search"
-        android:text="Các Giờ Tiếp Theo"
-        android:textColor="@android:color/widget_edittext_dark"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <LinearLayout
         android:id="@+id/linearLayout4"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="5dp"
-        android:layout_marginBottom="10dp"
         android:orientation="horizontal"
         android:weightSum="2"
-        app:layout_constraintBottom_toTopOf="@+id/btn_next"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_hours">
@@ -334,11 +272,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="192dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="69dp"
         android:layout_marginEnd="195dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/marker" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

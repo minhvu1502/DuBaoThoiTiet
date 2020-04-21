@@ -22,10 +22,10 @@ public class HomeMenu extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listView);
 
         ArrayList<Data> list1 = new ArrayList<Data>();
-        list1.add(new Data(R.drawable.rain, "Thời tiết hiện tại của thiết bị"));
-        list1.add(new Data(R.drawable.rain, "Xem thời tiết theo địa điểm nhập bất kì"));
-        list1.add(new Data(R.drawable.rain, "Xem thời tiết theo địa điểm nhập bất kì và dự báo các ngày kế tiếp"));
-        list1.add(new Data(R.drawable.rain, "Xem thời tiết trên Google Map"));
+        list1.add(new Data(R.drawable.loc2, "Thời tiết hiện tại của thiết bị"));
+        list1.add(new Data(R.drawable.search2, "Xem thời tiết theo địa điểm nhập bất kì"));
+        list1.add(new Data(R.drawable.calandar, "Xem thời tiết theo địa điểm nhập bất kì và dự báo các ngày kế tiếp"));
+        list1.add(new Data(R.drawable.googlmap, "Xem thời tiết trên Google Map"));
         CustomAdapter2 adapter = new CustomAdapter2(HomeMenu.this, R.layout.activity_custom_l_v, list1);
         listView.setAdapter(adapter);
 
@@ -35,12 +35,13 @@ public class HomeMenu extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) {
-                    Toast.makeText(HomeMenu.this, "111" + position, Toast.LENGTH_SHORT).show();
+                    intent = new Intent(HomeMenu.this,  weather_location.class);
+                    startActivity(intent);
                 } else if (position == 1) {
                     intent = new Intent(HomeMenu.this, MainActivity.class);
                     startActivity(intent);
                 } else if (position == 2) {
-                    intent = new Intent(HomeMenu.this, MainActivity.class);
+                    intent = new Intent(HomeMenu.this, seven_day_forecast.class);
                     startActivity(intent);
                 } else {
                     intent = new Intent(HomeMenu.this, MapsActivity.class);
