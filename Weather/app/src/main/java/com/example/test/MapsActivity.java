@@ -74,7 +74,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 btn_earth.setEnabled(false);
                 btn_type.setEnabled(true);
             }
-        });btn_type.setOnClickListener(new View.OnClickListener() {
+        });
+        btn_type.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
@@ -87,10 +88,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onClick(View v) {
                 weather_item.clear();
                 String data = txt_tim.getText().toString();
-                if (data.equals("")){
+                if (data.equals("")) {
                     Toast.makeText(MapsActivity.this, "Hãy Nhập Tên Thành Phố", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     GetLocation(data);
                 }
             }
@@ -99,42 +99,44 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MapsActivity.this, Seven_day_details.class);
-                intent.putExtra("city_name",CityName);
-                intent.putExtra("minmax",weather_item.get(0).getFeels_like());
+                intent.putExtra("city_name", CityName);
+                intent.putExtra("minmax", weather_item.get(0).getFeels_like());
                 intent.putExtra("country", weather_item.get(0).getCountry());
-                intent.putExtra("Day",weather_item.get(0).getDay());
-                intent.putExtra("status",weather_item.get(0).getStatus());
-                intent.putExtra("image",weather_item.get(0).getImage());
-                intent.putExtra("temp",weather_item.get(0).getMax());
-                intent.putExtra("doam",weather_item.get(0).getDoam());
-                intent.putExtra("gio",weather_item.get(0).getGio());
-                intent.putExtra("may",weather_item.get(0).getMay());
-                intent.putExtra("sunrise",weather_item.get(0).getSunrise());
-                intent.putExtra("sunset",weather_item.get(0).getSunset());
+                intent.putExtra("Day", weather_item.get(0).getDay());
+                intent.putExtra("status", weather_item.get(0).getStatus());
+                intent.putExtra("image", weather_item.get(0).getImage());
+                intent.putExtra("temp", weather_item.get(0).getMax());
+                intent.putExtra("doam", weather_item.get(0).getDoam());
+                intent.putExtra("gio", weather_item.get(0).getGio());
+                intent.putExtra("may", weather_item.get(0).getMay());
+                intent.putExtra("sunrise", weather_item.get(0).getSunrise());
+                intent.putExtra("sunset", weather_item.get(0).getSunset());
                 startActivity(intent);
             }
         });
     }
 
     private void AnhXa() {
-        btn_earth = (ImageButton)findViewById(R.id.btn_earth);
-        btn_type = (ImageButton)findViewById(R.id.btn_type);
+        btn_earth = (ImageButton) findViewById(R.id.btn_earth);
+        btn_type = (ImageButton) findViewById(R.id.btn_type);
         txt_tim = (EditText) findViewById(R.id.txt_seven_city);
         btn_tim = (ImageButton) findViewById(R.id.btn_tim);
         btn_back = (ImageButton) findViewById(R.id.btn_seven_back);
-        img_icon = (ImageView)findViewById(R.id.img_icon);
-        tv_city = (TextView)findViewById(R.id.tv_map_city);
-        tv_country = (TextView)findViewById(R.id.tv_city);
-        tv_date = (TextView)findViewById(R.id.tv_date);
-        tv_temp = (TextView)findViewById(R.id.tvmap_temp);
-        tv_max_min = (TextView)findViewById(R.id.tvmap_minmax);
-        btn_mapdetail = (Button)findViewById(R.id.btn_map_detail);
+        img_icon = (ImageView) findViewById(R.id.img_icon);
+        tv_city = (TextView) findViewById(R.id.tv_map_city);
+        tv_country = (TextView) findViewById(R.id.tv_city);
+        tv_date = (TextView) findViewById(R.id.tv_date);
+        tv_temp = (TextView) findViewById(R.id.tvmap_temp);
+        tv_max_min = (TextView) findViewById(R.id.tvmap_minmax);
+        btn_mapdetail = (Button) findViewById(R.id.btn_map_detail);
     }
-    public String Validate_Place(String city){
+
+    public String Validate_Place(String city) {
         city = city.trim();
         city = city.replaceAll("\\s+", "");
         return city;
     }
+
     private void GetLocation(String city) {
         city = Validate_Place(city);
         String url = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=" + city + "&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&key=AIzaSyD4oQg9klcCD0fVn-2sb5wbPrNNZs4bhJ4";
@@ -150,7 +152,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     String formatted_addr = jsonObject1.getString("formatted_address");
                     String[] country = formatted_addr.split(", ");
 
-                    formatted_address = country[country.length-1];
+                    formatted_address = country[country.length - 1];
                     JSONObject jsonObjectGeometry = jsonObject1.getJSONObject("geometry");
                     JSONObject jsonObjectLocation = jsonObjectGeometry.getJSONObject("location");
                     kinhdo = jsonObjectLocation.getString("lng");
@@ -161,7 +163,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     //                bien luu cac request gui len server
                     RequestQueue requestQueue_weather = Volley.newRequestQueue(MapsActivity.this);
                     //Doc du lieu duong dan
-                    String url_weather = "https://api.openweathermap.org/data/2.5/weather?lat="+vido+"&lon="+kinhdo+"&units=metric&appid=92c6161e0d9ddd64a865f69b71a89c31";
+                    String url_weather = "https://api.openweathermap.org/data/2.5/weather?lat=" + vido + "&lon=" + kinhdo + "&units=metric&appid=92c6161e0d9ddd64a865f69b71a89c31";
                     final StringRequest stringRequest_weather = new StringRequest(Request.Method.GET, url_weather, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -198,14 +200,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 String Temp_max = String.valueOf(a.intValue());
                                 String Temp_min = String.valueOf(b.intValue());
 
-                                tv_max_min.setText(Temp_min+"°/"+Temp_max+"°");
+                                tv_max_min.setText(Temp_min + "°/" + Temp_max + "°");
 
                                 String doam = jsonObjectMain.getString("humidity");
 
                                 Double x = Double.valueOf(nhietdo);
                                 String Nhietdo = String.valueOf(x.intValue());
 
-                                tv_temp.setText(Nhietdo+"°");
+                                tv_temp.setText(Nhietdo + "°");
 
                                 JSONObject jsonObjectWind = jsonObject.getJSONObject("wind");
                                 String wind = jsonObjectWind.getString("speed");
@@ -224,8 +226,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 date = new Date(l * 1000L);
                                 simpleDateFormat = new SimpleDateFormat("HH:mm");
                                 String Sunset = simpleDateFormat.format(date);
-                                String min_max_feelslike = temp_max+"° / "+temp_min+"°";
-                                weather_item.add(new Weather_SevenDay(formatted_address,Day,status,icon, nhietdo, min_max_feelslike,doam, wind, cloud,Sunrise, Sunset));
+                                String min_max_feelslike = temp_max + "° / " + temp_min + "°";
+                                weather_item.add(new Weather_SevenDay(formatted_address, Day, status, icon, nhietdo, min_max_feelslike, doam, wind, cloud, Sunrise, Sunset));
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -250,6 +252,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
         requestQueue.add(stringRequest);
     }
+
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -287,7 +290,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMyLocationClick(@NonNull Location location) {
         String myLat = String.valueOf(location.getLatitude());
         String myLng = String.valueOf(location.getLongitude());
-        Toast.makeText(this, "Kinh độ: "+myLng+" Vĩ độ: "+myLat, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Kinh độ: " + myLng + " Vĩ độ: " + myLat, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -303,7 +306,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         //bien luu cac request gui len server
                         RequestQueue requestQueue_weather = Volley.newRequestQueue(MapsActivity.this);
                         //Doc du lieu duong dan
-                        String url_weather = "https://api.openweathermap.org/data/2.5/weather?lat="+myLat+"&lon="+myLng+"&units=metric&appid=92c6161e0d9ddd64a865f69b71a89c31&lang=vi";
+                        String url_weather = "https://api.openweathermap.org/data/2.5/weather?lat=" + myLat + "&lon=" + myLng + "&units=metric&appid=92c6161e0d9ddd64a865f69b71a89c31&lang=vi";
                         final StringRequest stringRequest_weather = new StringRequest(Request.Method.GET, url_weather, new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {

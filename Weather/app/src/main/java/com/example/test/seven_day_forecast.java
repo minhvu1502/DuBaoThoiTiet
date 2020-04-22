@@ -34,7 +34,8 @@ public class seven_day_forecast extends AppCompatActivity {
     ImageButton btn_back, btn_search;
 
     ArrayList<Weather_SevenDay> weather_item = new ArrayList<Weather_SevenDay>();
-    String kinhdo="", vido = "", city_name, formatted_address;
+    String kinhdo = "", vido = "", city_name, formatted_address;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,11 +54,9 @@ public class seven_day_forecast extends AppCompatActivity {
             public void onClick(View v) {
                 weather_item.clear();
                 String city = txt_city.getText().toString();
-                if (city.equals(""))
-                {
+                if (city.equals("")) {
                     Toast.makeText(seven_day_forecast.this, "Hãy nhập tên thành phố", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     city = Validate_places(city);
                     GetLocation(city);
                 }
@@ -67,22 +66,23 @@ public class seven_day_forecast extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(seven_day_forecast.this, Seven_day_details.class);
-                intent.putExtra("city_name",city_name);
-                intent.putExtra("minmax",weather_item.get(position).getFeels_like());
+                intent.putExtra("city_name", city_name);
+                intent.putExtra("minmax", weather_item.get(position).getFeels_like());
                 intent.putExtra("country", formatted_address);
-                intent.putExtra("Day",weather_item.get(position).getDay());
-                intent.putExtra("status",weather_item.get(position).getStatus());
-                intent.putExtra("image",weather_item.get(position).getImage());
-                intent.putExtra("temp",weather_item.get(position).getMax());
-                intent.putExtra("doam",weather_item.get(position).getDoam());
-                intent.putExtra("gio",weather_item.get(position).getGio());
-                intent.putExtra("may",weather_item.get(position).getMay());
-                intent.putExtra("sunrise",weather_item.get(position).getSunrise());
-                intent.putExtra("sunset",weather_item.get(position).getSunset());
+                intent.putExtra("Day", weather_item.get(position).getDay());
+                intent.putExtra("status", weather_item.get(position).getStatus());
+                intent.putExtra("image", weather_item.get(position).getImage());
+                intent.putExtra("temp", weather_item.get(position).getMax());
+                intent.putExtra("doam", weather_item.get(position).getDoam());
+                intent.putExtra("gio", weather_item.get(position).getGio());
+                intent.putExtra("may", weather_item.get(position).getMay());
+                intent.putExtra("sunrise", weather_item.get(position).getSunrise());
+                intent.putExtra("sunset", weather_item.get(position).getSunset());
                 startActivity(intent);
             }
         });
     }
+
     private void GetLocation(String city) {
         city = city.trim();
         city = city.replaceAll("\\s+", "");
@@ -99,7 +99,7 @@ public class seven_day_forecast extends AppCompatActivity {
                     city_name = name;
                     String formatted_addr = jsonObject1.getString("formatted_address");
                     String[] country = formatted_addr.split(", ");
-                    formatted_address = country[country.length-1];
+                    formatted_address = country[country.length - 1];
                     JSONObject jsonObjectGeometry = jsonObject1.getJSONObject("geometry");
                     JSONObject jsonObjectLocation = jsonObjectGeometry.getJSONObject("location");
                     kinhdo = jsonObjectLocation.getString("lng");
@@ -107,7 +107,7 @@ public class seven_day_forecast extends AppCompatActivity {
 //                bien luu cac request gui len server
                     RequestQueue requestQueue_weather = Volley.newRequestQueue(seven_day_forecast.this);
                     //Doc du lieu duong dan
-                    String url_weather = "https://api.openweathermap.org/data/2.5/onecall?lat="+vido+"&lon="+kinhdo+"&units=metric&appid=92c6161e0d9ddd64a865f69b71a89c31&lang=vi";
+                    String url_weather = "https://api.openweathermap.org/data/2.5/onecall?lat=" + vido + "&lon=" + kinhdo + "&units=metric&appid=92c6161e0d9ddd64a865f69b71a89c31&lang=vi";
                     final StringRequest stringRequest_weather = new StringRequest(Request.Method.GET, url_weather, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -116,7 +116,7 @@ public class seven_day_forecast extends AppCompatActivity {
                                 //nhận dữ liệu trả về từ api
                                 JSONObject jsonObject = new JSONObject(response);
                                 JSONArray jsonArrayDaily = jsonObject.getJSONArray("daily");
-                                for (int i = 0;i< jsonArrayDaily.length();i++){
+                                for (int i = 0; i < jsonArrayDaily.length(); i++) {
                                     JSONObject jsonObjectDaily = jsonArrayDaily.getJSONObject(i);
                                     //get day
                                     String day = jsonObjectDaily.getString("dt");
@@ -164,10 +164,10 @@ public class seven_day_forecast extends AppCompatActivity {
                                     simpleDateFormat = new SimpleDateFormat("HH:mm");
                                     String Sunset = simpleDateFormat.format(date);
                                     //Gán giá trị
-                                    String min_max_feelslike = temp_max+"° / "+temp_min+"°";
+                                    String min_max_feelslike = temp_max + "° / " + temp_min + "°";
                                     Adapter_SevenDay customAdapter;
-                                    weather.add(new Weather_SevenDay(Day,description,icon, temp_max, temp_min));
-                                    weather_item.add(new Weather_SevenDay(formatted_address,Day,description,icon,temp, min_max_feelslike,doam, gio, may,Sunrise, Sunset));
+                                    weather.add(new Weather_SevenDay(Day, description, icon, temp_max, temp_min));
+                                    weather_item.add(new Weather_SevenDay(formatted_address, Day, description, icon, temp, min_max_feelslike, doam, gio, may, Sunrise, Sunset));
                                     customAdapter = new Adapter_SevenDay(seven_day_forecast.this, weather);
                                     list_.setAdapter(customAdapter);
                                 }
@@ -197,13 +197,15 @@ public class seven_day_forecast extends AppCompatActivity {
         });
         requestQueue.add(stringRequest);
     }
-    public void AnhXa(){
-        list_ = (ListView)findViewById(R.id.list_seven);
-        tv_city = (TextView)findViewById(R.id.tv_sevenday_city);
-        txt_city = (EditText)findViewById(R.id.txt_seven_city);
-        btn_search = (ImageButton)findViewById(R.id.btn_tim);
-        btn_back = (ImageButton)findViewById(R.id.btn_seven_back);
+
+    public void AnhXa() {
+        list_ = (ListView) findViewById(R.id.list_seven);
+        tv_city = (TextView) findViewById(R.id.tv_sevenday_city);
+        txt_city = (EditText) findViewById(R.id.txt_seven_city);
+        btn_search = (ImageButton) findViewById(R.id.btn_tim);
+        btn_back = (ImageButton) findViewById(R.id.btn_seven_back);
     }
+
     public String Validate_places(String data) {
         data = data.trim();
         data = data.replaceAll("\\s+", "");

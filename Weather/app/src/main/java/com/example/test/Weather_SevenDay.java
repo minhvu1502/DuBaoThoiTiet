@@ -87,6 +87,7 @@ public class Weather_SevenDay {
         this.gio = gio;
         this.may = may;
     }
+
     private String feels_like;
     private String Sunset;
 

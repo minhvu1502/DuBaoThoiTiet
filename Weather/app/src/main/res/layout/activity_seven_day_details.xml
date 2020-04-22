@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg"
-    tools:context=".Seven_day_details"
-    >
+    tools:context=".Seven_day_details">
 
     <TextView
         android:id="@+id/tv_hours"
@@ -21,18 +20,20 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
     <ImageButton
         android:id="@+id/btn_seven_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
-        android:textAlignment="center"
-        android:foregroundGravity="center"
         android:layout_marginTop="5dp"
         android:background="@drawable/bg_search"
+        android:foregroundGravity="center"
+        android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="?attr/actionModeCloseDrawable" />
+
     <TextView
         android:id="@+id/tv_city"
         android:layout_width="wrap_content"
