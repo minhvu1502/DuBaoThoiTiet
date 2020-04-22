@@ -81,8 +81,8 @@ public class Weather_SevenDay {
         this.feels_like = feels_like;
         Image = image;
         this.max = max;
-        Sunrise = sunrise;
-        Sunset = sunset;
+        this.Sunrise = sunrise;
+        this.Sunset = sunset;
         this.doam = doam;
         this.gio = gio;
         this.may = may;
