@@ -163,7 +163,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     //                bien luu cac request gui len server
                     RequestQueue requestQueue_weather = Volley.newRequestQueue(MapsActivity.this);
                     //Doc du lieu duong dan
-                    String url_weather = "https://api.openweathermap.org/data/2.5/weather?lat=" + vido + "&lon=" + kinhdo + "&units=metric&appid=92c6161e0d9ddd64a865f69b71a89c31";
+                    String url_weather = "https://api.openweathermap.org/data/2.5/weather?lat=" + vido + "&lon=" + kinhdo + "&units=metric&appid=92c6161e0d9ddd64a865f69b71a89c31&lang=vi";
                     final StringRequest stringRequest_weather = new StringRequest(Request.Method.GET, url_weather, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
