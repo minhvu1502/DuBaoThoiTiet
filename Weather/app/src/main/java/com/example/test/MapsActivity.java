@@ -51,7 +51,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     TextView tv_city, tv_country, tv_date, tv_temp, tv_max_min;
     Button btn_mapdetail;
     private GoogleMap mMap;
-    String CityName = "", formatted_address;
+    String CityName = "", formatted_address, Text;
     String kinhdo = "", vido = "";
     private GoogleApiClient googleApiClient;
 
@@ -134,9 +134,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         btn_mapdetail = (Button) findViewById(R.id.btn_map_detail);
     }
 
-    private void GetLocation(String city) {
+    public String Validate_Place(String city) {
         city = city.trim();
         city = city.replaceAll("\\s+", "");
+        return city;
+    }
+
+    private void GetLocation(String city) {
+        city = Validate_Place(city);
         String url = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=" + city + "&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&key=AIzaSyD4oQg9klcCD0fVn-2sb5wbPrNNZs4bhJ4";
         RequestQueue requestQueue = Volley.newRequestQueue(MapsActivity.this);
         final StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -161,6 +166,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     //                bien luu cac request gui len server
                     RequestQueue requestQueue_weather = Volley.newRequestQueue(MapsActivity.this);
                     String url_weather = "https://api.openweathermap.org/data/2.5/weather?lat=" + vido + "&lon=" + kinhdo + "&units=metric&appid=92c6161e0d9ddd64a865f69b71a89c31&lang=vi";
+                    //Doc du lieu duong dan
                     final StringRequest stringRequest_weather = new StringRequest(Request.Method.GET, url_weather, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -250,6 +256,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         requestQueue.add(stringRequest);
     }
 
+    /**
+     * Manipulates the map once available.
+     * This callback is triggered when the map is ready to be used.
+     * This is where we can add markers or lines, add listeners or move the camera. In this case,
+     * we just add a marker near Sydney, Australia.
+     * If Google Play services is not installed on the device, the user will be prompted to install
+     * it inside the SupportMapFragment. This method will only be triggered once the user has
+     * installed Google Play services and returned to the app.
+     */
     @Override
     // Callback được gợi sau khi Map đã sẵn sàng
     public void onMapReady(GoogleMap googleMap) {
@@ -300,13 +315,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMyLocationClick(@NonNull Location location) {
-        Toast.makeText(this, "Current location:\n" + location, Toast.LENGTH_LONG).show();
         String myLat = String.valueOf(location.getLatitude());
         String myLng = String.valueOf(location.getLongitude());
+        Toast.makeText(this, "Kinh độ: " + myLng + " Vĩ độ: " + myLat, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public boolean onMyLocationButtonClick() {
+        weather_item.clear();
         FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(MapsActivity.this);
         fusedLocationClient.getLastLocation()
                 .addOnSuccessListener(this, new OnSuccessListener<Location>() {
@@ -315,6 +331,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         String myLat = String.valueOf(location.getLatitude());
                         String myLng = String.valueOf(location.getLongitude());
                         getWeather(myLat, myLng);
+                        //bien luu cac request gui len server
+                        RequestQueue requestQueue_weather = Volley.newRequestQueue(MapsActivity.this);
+                        //Doc du lieu duong dan
+                        String url_weather = "https://api.openweathermap.org/data/2.5/weather?lat=" + myLat + "&lon=" + myLng + "&units=metric&appid=92c6161e0d9ddd64a865f69b71a89c31&lang=vi";
+                        final StringRequest stringRequest_weather = new StringRequest(Request.Method.GET, url_weather, new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    //nhận dữ liệu trả về từ api
+                                    JSONObject jsonObject = new JSONObject(response);
+                                    String name = jsonObject.getString("name");
+                                    GetLocation(name);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast.makeText(MapsActivity.this, "Không có dữ liệu", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        requestQueue_weather.add(stringRequest_weather);
                     }
                 });
         return false;

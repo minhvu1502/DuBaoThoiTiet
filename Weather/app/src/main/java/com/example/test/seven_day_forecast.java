@@ -167,7 +167,7 @@ public class seven_day_forecast extends AppCompatActivity {
                                     String min_max_feelslike = temp_max+"° / "+temp_min+"°";
                                     Adapter_SevenDay customAdapter;
                                     weather.add(new Weather_SevenDay(Day,description,icon, temp_max, temp_min));
-                                    weather_item.add(new Weather_SevenDay(formatted_address,Day,description,icon,temp, min_max_feelslike,doam, gio, may,Sunset, Sunrise));
+                                    weather_item.add(new Weather_SevenDay(formatted_address,Day,description,icon,temp, min_max_feelslike,doam, gio, may,Sunrise, Sunset));
                                     customAdapter = new Adapter_SevenDay(seven_day_forecast.this, weather);
                                     list_.setAdapter(customAdapter);
                                 }
