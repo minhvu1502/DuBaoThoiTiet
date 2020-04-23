@@ -38,17 +38,28 @@
             android:layout_height="match_parent"
             android:layout_weight="6"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="5">
 
             <EditText
                 android:id="@+id/txt_seven_city"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="4.5"
                 android:background="@drawable/bg_search"
                 android:ems="10"
                 android:gravity="center"
                 android:hint="Search"
                 android:inputType="text" />
+
+            <ImageButton
+                android:id="@+id/btn_mic"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="0.5"
+                android:background="@drawable/bg_search"
+                app:srcCompat="@drawable/mic" />
         </LinearLayout>
 
         <LinearLayout
