@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Test</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="api_key" />
+    <string name="facebook_app_id">253504385800401</string> <string name="fb_login_protocol_scheme">fb253504385800401</string>
+
+</resources>
