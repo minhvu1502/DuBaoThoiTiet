@@ -2,6 +2,7 @@ package com.example.test.activity;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -27,6 +28,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.test.R;
+import com.example.test.adapter.DBhelper;
+import com.example.test.models.City;
 import com.example.test.models.Weather_SevenDay;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
@@ -58,20 +61,20 @@ import java.util.Map;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationClickListener, GoogleMap.OnMyLocationButtonClickListener {
     private static final int REQ_CODE_SPEECH_INPUT = 1502;
     EditText txt_tim;
-    ImageButton btn_tim, btn_earth, btn_type;
-    ImageButton btn_back;
+    ImageButton btn_tim, btn_earth, btn_type, btn_back;
     ImageView img_icon;
     ArrayList<Weather_SevenDay> weather_item = new ArrayList<Weather_SevenDay>();
     TextView tv_city, tv_country, tv_date, tv_temp, tv_max_min;
     Button btn_mapdetail;
     private GoogleMap mMap;
-    String CityName = "", formatted_address, Text;
-    String kinhdo = "", vido = "";
+    String CityName = "", formatted_address, Text, kinhdo = "", vido = "";
     ImageButton btn_mic;
     Button btn_map_share;
     ShareDialog shareDialog;
     ShareLinkContent shareLinkContent;
     String id_city;
+    Button btn_map_save;
+    DBhelper dBhelper = new DBhelper(MapsActivity.this);;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +84,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         AnhXa();
+
         shareDialog = new ShareDialog(MapsActivity.this);
         btn_mic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,6 +104,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
                 btn_earth.setEnabled(false);
                 btn_type.setEnabled(true);
+            }
+        });
+        btn_map_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                long resultAdd = dBhelper.Insert(1,"Ha Noi", "20", "30");
+                if (resultAdd == -1) {
+                    Toast.makeText(MapsActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(MapsActivity.this, "Insert Success", Toast.LENGTH_SHORT).show();
+                }
+                ArrayList<City> cityArrayList = new ArrayList<>();
+                cityArrayList = dBhelper.getAllWords();
             }
         });
         btn_type.setOnClickListener(new View.OnClickListener() {
@@ -200,6 +218,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         tv_max_min = (TextView) findViewById(R.id.tvmap_minmax);
         btn_mapdetail = (Button) findViewById(R.id.btn_map_detail);
         btn_map_share = (Button) findViewById(R.id.btn_map_share);
+        btn_map_save = (Button) findViewById(R.id.btn_map_save);
     }
 
     public String Validate_Place(String city) {
@@ -207,7 +226,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         city = city.replaceAll("\\s+", "");
         return city;
     }
+    protected void onStart() {
+        super.onStart();
+        dBhelper.openDB();
+    }
 
+    protected void onStop() {
+        super.onStop();
+        dBhelper.closeDB();
+    }
     private void GetLocation(String city) {
         city = Validate_Place(city);
         String url = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=" + city + "&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&key=AIzaSyD4oQg9klcCD0fVn-2sb5wbPrNNZs4bhJ4";
