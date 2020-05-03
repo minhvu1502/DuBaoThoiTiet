@@ -110,7 +110,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
 
-                long resultAdd = dBhelper.Insert(1,"Ha Noi", "20", "30");
+                long resultAdd = dBhelper.Insert(2,"Thành phố hồ chí minh", "50", "30");
                 if (resultAdd == -1) {
                     Toast.makeText(MapsActivity.this, "Error", Toast.LENGTH_SHORT).show();
                 } else {
